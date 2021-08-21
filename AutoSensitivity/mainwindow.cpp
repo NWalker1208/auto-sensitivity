@@ -2,8 +2,9 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      mouseSettings(touchpadKey, QSettings::NativeFormat)
 {
     ui->setupUi(this);
 
@@ -17,8 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     tray->setToolTip(QString("Auto Sensitivity"));
     tray->show();
 
-    QObject::connect(tray, &QSystemTrayIcon::activated, this, &MainWindow::TrayIconActivated);
-    QObject::connect(trayMenu, &QMenu::triggered, this, &MainWindow::TrayIconMenuAction);
+    QObject::connect(tray, &QSystemTrayIcon::activated, this, &MainWindow::on_tray_activated);
+    QObject::connect(trayMenu, &QMenu::triggered, this, &MainWindow::on_trayMenu_triggered);
+
+    refresh();
 }
 
 MainWindow::~MainWindow()
@@ -38,24 +41,37 @@ bool MainWindow::event(QEvent *event) {
     return QMainWindow::event(event);
 }
 
-void MainWindow::TrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
+void MainWindow::refresh() {
+    int val = mouseSettings.value(sensitivityKey).toInt();
+    ui->defaultSensitivity->setCurrentIndex(val);
+}
+
+void MainWindow::updateSensitivity(int value) {
+    mouseSettings.setValue(sensitivityKey, value);
+}
+
+void MainWindow::on_tray_activated(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         if (isVisible()) {
             hide();
         } else {
-            show();
+            showNormal();
             activateWindow();
-            setWindowState(Qt::WindowActive);
         }
     }
 }
 
-void MainWindow::TrayIconMenuAction(QAction *action) {
+void MainWindow::on_trayMenu_triggered(QAction *action) {
     if (action->text() == "Settings") {
-        show();
+        showNormal();
         activateWindow();
-        setWindowState(Qt::WindowActive);
     } else if (action->text() == "Exit") {
         close();
     }
 }
+
+void MainWindow::on_defaultSensitivity_currentIndexChanged(int index)
+{
+    updateSensitivity(index);
+}
+

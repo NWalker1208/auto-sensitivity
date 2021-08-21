@@ -20,7 +20,94 @@
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="defaultLabel">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>240</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Default Mouse Sensitivity:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="defaultSensitivity">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>240</y>
+      <width>141</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Most sensitive</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>High sensitivity</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Medium sensitivity</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Low sensitivity</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="fullscreenLabel">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>290</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fullscreen Sensitivity:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="fullscreenSensitivity">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>290</y>
+      <width>141</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Most sensitive</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>High sensitivity</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Medium sensitivity</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Low sensitivity</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
