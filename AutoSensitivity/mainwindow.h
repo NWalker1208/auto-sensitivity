@@ -18,8 +18,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    bool event(QEvent *event);
+
 public slots:
     void TrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+    void TrayIconMenuAction(QAction *action);
 
 private:
     Ui::MainWindow *ui;
