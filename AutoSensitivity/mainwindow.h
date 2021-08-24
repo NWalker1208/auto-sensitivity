@@ -22,7 +22,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    bool event(QEvent *event);
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void refresh();
@@ -43,5 +43,7 @@ private:
     SensitivityControl sensitivity;
     FullscreenDetector detector;
     SettingsManager settings;
+
+    bool closing = false;
 };
 #endif // MAINWINDOW_H

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -35,14 +35,13 @@ MainWindow::~MainWindow()
     delete trayMenu;
 }
 
-bool MainWindow::event(QEvent *event) {
-    if (event->type() == QEvent::WindowStateChange) {
-        if (windowState().testFlag(Qt::WindowMinimized)) {
-            hide();
-            return true;
-        }
+void MainWindow::closeEvent(QCloseEvent *event) {
+    if (closing) {
+        event->accept();
+    } else {
+        hide();
+        event->ignore();
     }
-    return QMainWindow::event(event);
 }
 
 void MainWindow::refresh() {
@@ -71,13 +70,7 @@ void MainWindow::updateSensitivity() {
 
 void MainWindow::on_tray_activated(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
-        if (isVisible()) {
-            hide();
-        } else {
-            showNormal();
-            activateWindow();
-            refresh();
-        }
+        trayMenu->popup(QCursor::pos());
     }
 }
 
@@ -87,6 +80,7 @@ void MainWindow::on_trayMenu_triggered(QAction *action) {
         activateWindow();
         refresh();
     } else if (action->text() == "Exit") {
+        closing = true;
         close();
     }
 }
