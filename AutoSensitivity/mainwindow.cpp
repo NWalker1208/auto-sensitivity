@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::MainWindow),
-      mouseSettings(touchpadKey, QSettings::NativeFormat)
+      ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -20,6 +20,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(tray, &QSystemTrayIcon::activated, this, &MainWindow::on_tray_activated);
     QObject::connect(trayMenu, &QMenu::triggered, this, &MainWindow::on_trayMenu_triggered);
+
+    updateTimer = new QTimer(this);
+    QObject::connect(updateTimer, &QTimer::timeout, this, &MainWindow::updateSensitivity);
+    updateTimer->start(1000);
 
     refresh();
 }
@@ -42,12 +46,27 @@ bool MainWindow::event(QEvent *event) {
 }
 
 void MainWindow::refresh() {
-    int val = mouseSettings.value(sensitivityKey).toInt();
-    ui->defaultSensitivity->setCurrentIndex(val);
+    bool changedExternally = sensitivity.refresh();
+    Sensitivity current = sensitivity.value();
+
+    if (changedExternally) {
+        if (!detector.foregroundFullscreen())
+            settings.setWindowed(current);
+        else
+            settings.setFullscreen(current);
+    }
+
+    ui->windowedSensitivity->setCurrentIndex(settings.getWindowed(current));
+    ui->fullscreenSensitivity->setCurrentIndex(settings.getFullscreen(current));
 }
 
-void MainWindow::updateSensitivity(int value) {
-    mouseSettings.setValue(sensitivityKey, value);
+void MainWindow::updateSensitivity() {
+    Sensitivity defaultVal = sensitivity.value();
+    if (!detector.foregroundFullscreen()) {
+        sensitivity.setValue(settings.getWindowed(defaultVal));
+    } else {
+        sensitivity.setValue(settings.getFullscreen(defaultVal));
+    }
 }
 
 void MainWindow::on_tray_activated(QSystemTrayIcon::ActivationReason reason) {
@@ -57,6 +76,7 @@ void MainWindow::on_tray_activated(QSystemTrayIcon::ActivationReason reason) {
         } else {
             showNormal();
             activateWindow();
+            refresh();
         }
     }
 }
@@ -65,13 +85,19 @@ void MainWindow::on_trayMenu_triggered(QAction *action) {
     if (action->text() == "Settings") {
         showNormal();
         activateWindow();
+        refresh();
     } else if (action->text() == "Exit") {
         close();
     }
 }
 
-void MainWindow::on_defaultSensitivity_currentIndexChanged(int index)
-{
-    updateSensitivity(index);
+void MainWindow::on_windowedSensitivity_currentIndexChanged(int index) {
+    settings.setWindowed((Sensitivity)index);
+    updateSensitivity();
 }
 
+
+void MainWindow::on_fullscreenSensitivity_currentIndexChanged(int index) {
+    settings.setFullscreen((Sensitivity)index);
+    updateSensitivity();
+}

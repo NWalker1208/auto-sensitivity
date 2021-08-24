@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>336</width>
+    <height>72</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,111 +17,79 @@
    <iconset resource="res.qrc">
     <normaloff>:/images/tray.ico</normaloff>:/images/tray.ico</iconset>
   </property>
-  <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonIconOnly</enum>
-  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="defaultLabel">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>240</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Default Mouse Sensitivity:</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="defaultSensitivity">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>240</y>
-      <width>141</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Most sensitive</string>
-     </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="windowedLabel">
+      <property name="text">
+       <string>Windowed Sensitivity:</string>
+      </property>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string>High sensitivity</string>
-     </property>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="windowedSensitivity">
+      <item>
+       <property name="text">
+        <string>Most sensitive</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>High sensitivity</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Medium sensitivity</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Low sensitivity</string>
+       </property>
+      </item>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string>Medium sensitivity</string>
-     </property>
+    <item row="1" column="0">
+     <widget class="QLabel" name="fullscreenLabel">
+      <property name="text">
+       <string>Fullscreen Sensitivity:</string>
+      </property>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string>Low sensitivity</string>
-     </property>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="fullscreenSensitivity">
+      <item>
+       <property name="text">
+        <string>Most sensitive</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>High sensitivity</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Medium sensitivity</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Low sensitivity</string>
+       </property>
+      </item>
+     </widget>
     </item>
-   </widget>
-   <widget class="QLabel" name="fullscreenLabel">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>290</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Fullscreen Sensitivity:</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="fullscreenSensitivity">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>290</y>
-      <width>141</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Most sensitive</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>High sensitivity</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Medium sensitivity</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Low sensitivity</string>
-     </property>
-    </item>
-   </widget>
+   </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>25</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="res.qrc"/>
  </resources>
  <connections/>
+ <slots>
+  <slot>refresh()</slot>
+  <slot>updateSensitivity()</slot>
+ </slots>
 </ui>
