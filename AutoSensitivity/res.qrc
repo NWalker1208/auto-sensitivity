@@ -1,9 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/icon.ico</file>
         <file>images/tray.ico</file>
-        <file>images/tray.svg</file>
-        <file>images/tray-16.png</file>
-        <file>images/tray-32.png</file>
-        <file>images/tray-64.png</file>
     </qresource>
 </RCC>

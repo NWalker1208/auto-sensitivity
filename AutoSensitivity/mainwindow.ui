@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res.qrc">
-    <normaloff>:/images/tray.ico</normaloff>:/images/tray.ico</iconset>
+    <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QFormLayout" name="formLayout">
